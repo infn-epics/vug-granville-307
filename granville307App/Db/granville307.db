@@ -1,0 +1,290 @@
+# Macros: P (PV prefix), PORT (asyn port), ADDR (RS-485 address),
+# PROTO (granville307-rs232.proto or granville307-rs485.proto),
+# PRES_UNIT_DEFAULT (0 = Torr, 1 = Bar).
+# RS-232 protocol ignores ADDR; RS-485 protocol uses it for addressed commands.
+
+record(ai, "$(P):IG1:Pressure") {
+    field(DESC, "Ion gauge 1 pressure")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readPressure(IG1,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(EGU, "Torr")
+    field(PREC, "3")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):IG1:Valid") {
+    field(DESC, "IG1 pressure valid")
+    field(INPA, "$(P):IG1:Pressure CP NMS")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+record(ai, "$(P):IG2:Pressure") {
+    field(DESC, "Ion gauge 2 pressure")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readPressure(IG2,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(EGU, "Torr")
+    field(PREC, "3")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):IG2:Valid") {
+    field(DESC, "IG2 pressure valid")
+    field(INPA, "$(P):IG2:Pressure CP NMS")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+record(ai, "$(P):IG:Pressure") {
+    field(DESC, "Pressure from whichever ion gauge is on")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readPressure(IG,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(EGU, "Torr")
+    field(PREC, "3")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):IG:Valid") {
+    field(DESC, "Active IG pressure valid")
+    field(INPA, "$(P):IG:Pressure CP NMS")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+record(ai, "$(P):CG1:Pressure") {
+    field(DESC, "Auxiliary gauge channel 1 pressure")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readPressure(CG1,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(EGU, "Torr")
+    field(PREC, "3")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):CG1:Valid") {
+    field(DESC, "CG1 pressure valid")
+    field(INPA, "$(P):CG1:Pressure CP NMS")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+record(ai, "$(P):CG2:Pressure") {
+    field(DESC, "Auxiliary gauge channel 2 pressure")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readPressure(CG2,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(EGU, "Torr")
+    field(PREC, "3")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):CG2:Valid") {
+    field(DESC, "CG2 pressure valid")
+    field(INPA, "$(P):CG2:Pressure CP NMS")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+# STATE_RB follows the UniVac vacuum-channel convention: 1 means a valid
+# pressure reply, 0 means the DS reply is at/above the controller sentinel.
+# The manual describes the sentinel for an off or starting ion gauge and for
+# an absent auxiliary gauge module; this is a measurement state, not link health.
+record(calc, "$(P):IG1:STATE_RB") {
+    field(DESC, "IG1 state (1=valid)")
+    field(INPA, "$(P):IG1:Pressure CP")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+record(calc, "$(P):IG2:STATE_RB") {
+    field(DESC, "IG2 state (1=valid)")
+    field(INPA, "$(P):IG2:Pressure CP")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+record(calc, "$(P):IG:STATE_RB") {
+    field(DESC, "Active IG state (1=valid)")
+    field(INPA, "$(P):IG:Pressure CP")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+record(calc, "$(P):CG1:STATE_RB") {
+    field(DESC, "CG1 state (1=valid)")
+    field(INPA, "$(P):CG1:Pressure CP")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+record(calc, "$(P):CG2:STATE_RB") {
+    field(DESC, "CG2 state (1=valid)")
+    field(INPA, "$(P):CG2:Pressure CP")
+    field(CALC, "A<1e8")
+    field(PREC, "0")
+}
+
+# Select the output unit at runtime. The 307 must report pressure in Torr.
+record(mbbo, "$(P):UNIT_RB") {
+    field(DESC, "Pressure units Torr/Bar")
+    field(DTYP, "Soft Channel")
+    field(ZRST, "Torr")
+    field(ONST, "Bar")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(VAL, "$(PRES_UNIT_DEFAULT)")
+    field(PINI, "YES")
+    field(OUT, "$(P):UNIT_CODE")
+}
+
+record(longin, "$(P):UNIT_CODE") {
+    field(DESC, "Pressure unit selector")
+    field(SCAN, "Passive")
+}
+
+# UniVac-compatible pressure readbacks. The selected unit is 0 = Torr and
+# 1 = Bar; the calculation converts the Torr source when Bar is selected.
+record(calc, "$(P):IG1:PRES_RB") {
+    field(DESC, "IG1 pressure readback")
+    field(INPA, "$(P):IG1:Pressure CP")
+    field(INPB, "$(P):UNIT_RB CP")
+    field(CALC, "A*(1-B*0.998666776316)")
+    field(PREC, "4")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):IG2:PRES_RB") {
+    field(DESC, "IG2 pressure readback")
+    field(INPA, "$(P):IG2:Pressure CP")
+    field(INPB, "$(P):UNIT_RB CP")
+    field(CALC, "A*(1-B*0.998666776316)")
+    field(PREC, "4")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):IG:PRES_RB") {
+    field(DESC, "Active IG pressure readback")
+    field(INPA, "$(P):IG:Pressure CP")
+    field(INPB, "$(P):UNIT_RB CP")
+    field(CALC, "A*(1-B*0.998666776316)")
+    field(PREC, "4")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):CG1:PRES_RB") {
+    field(DESC, "CG1 pressure readback")
+    field(INPA, "$(P):CG1:Pressure CP")
+    field(INPB, "$(P):UNIT_RB CP")
+    field(CALC, "A*(1-B*0.998666776316)")
+    field(PREC, "4")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(calc, "$(P):CG2:PRES_RB") {
+    field(DESC, "CG2 pressure readback")
+    field(INPA, "$(P):CG2:Pressure CP")
+    field(INPB, "$(P):UNIT_RB CP")
+    field(CALC, "A*(1-B*0.998666776316)")
+    field(PREC, "4")
+    field(HIHI, "1e8")
+    field(HHSV, "INVALID")
+}
+
+record(bo, "$(P):IG1:Enable") {
+    field(DESC, "Request ion gauge 1 off/on")
+    field(DTYP, "stream")
+    field(OUT, "@$(PROTO) enableIG1($(ADDR)) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "$(P):IG2:Enable") {
+    field(DESC, "Request ion gauge 2 off/on")
+    field(DTYP, "stream")
+    field(OUT, "@$(PROTO) enableIG2($(ADDR)) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "$(P):Degas:Enable") {
+    field(DESC, "Request ion gauge degas off/on")
+    field(DTYP, "stream")
+    field(OUT, "@$(PROTO) enableDegas($(ADDR)) $(PORT)")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bi, "$(P):Degas:Status") {
+    field(DESC, "Degas status: 0 off, 1 on")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readDegas($(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bi, "$(P):Relay1:Status") {
+    field(DESC, "Process control relay channel 1")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readRelay(1,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(ZNAM, "INACTIVE")
+    field(ONAM, "ACTIVE")
+}
+
+record(bi, "$(P):Relay2:Status") {
+    field(DESC, "Process control relay channel 2")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readRelay(2,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(ZNAM, "INACTIVE")
+    field(ONAM, "ACTIVE")
+}
+
+record(bi, "$(P):Relay3:Status") {
+    field(DESC, "Process control relay channel 3")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readRelay(3,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(ZNAM, "INACTIVE")
+    field(ONAM, "ACTIVE")
+}
+
+record(bi, "$(P):Relay4:Status") {
+    field(DESC, "Process control relay channel 4")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readRelay(4,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(ZNAM, "INACTIVE")
+    field(ONAM, "ACTIVE")
+}
+
+record(bi, "$(P):Relay5:Status") {
+    field(DESC, "Process control relay channel 5")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readRelay(5,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(ZNAM, "INACTIVE")
+    field(ONAM, "ACTIVE")
+}
+
+record(bi, "$(P):Relay6:Status") {
+    field(DESC, "Process control relay channel 6")
+    field(DTYP, "stream")
+    field(INP, "@$(PROTO) readRelay(6,$(ADDR)) $(PORT)")
+    field(SCAN, "10 second")
+    field(ZNAM, "INACTIVE")
+    field(ONAM, "ACTIVE")
+}

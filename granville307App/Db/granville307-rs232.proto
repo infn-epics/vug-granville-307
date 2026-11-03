@@ -1,0 +1,38 @@
+# Granville-Phillips Series 307 RS-232 protocol.
+# The RS-232 interface accepts LF or CRLF and replies with CRLF.
+OutTerminator = "\r\n";
+InTerminator  = "\r\n";
+ReplyTimeout  = 3000;
+ReadTimeout   = 2000;
+LockTimeout   = 10000;
+ExtraInput    = Ignore;
+
+readPressure {
+    out "DS \$1";
+    in "%f";
+}
+
+enableIG1 {
+    out "IG1 %{OFF|ON}";
+    in "OK";
+}
+
+enableIG2 {
+    out "IG2 %{OFF|ON}";
+    in "OK";
+}
+
+enableDegas {
+    out "DG %{OFF|ON}";
+    in "OK";
+}
+
+readDegas {
+    out "DGS";
+    in "%d";
+}
+
+readRelay {
+    out "PCS \$1";
+    in "%d";
+}

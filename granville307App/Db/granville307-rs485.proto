@@ -1,0 +1,38 @@
+# Granville-Phillips Series 307 addressed RS-485 protocol.
+# ADDR is supplied as the second protocol argument and is two hex digits.
+OutTerminator = "\r";
+InTerminator  = "\r";
+ReplyTimeout  = 3000;
+ReadTimeout   = 2000;
+LockTimeout   = 10000;
+ExtraInput    = Ignore;
+
+readPressure {
+    out "#\$2DS \$1";
+    in "%f";
+}
+
+enableIG1 {
+    out "#\$1IG1 %{OFF|ON}";
+    in "OK";
+}
+
+enableIG2 {
+    out "#\$1IG2 %{OFF|ON}";
+    in "OK";
+}
+
+enableDegas {
+    out "#\$1DG %{OFF|ON}";
+    in "OK";
+}
+
+readDegas {
+    out "#\$1DGS";
+    in "%d";
+}
+
+readRelay {
+    out "#\$2PCS \$1";
+    in "%d";
+}

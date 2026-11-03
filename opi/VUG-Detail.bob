@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Granville 307 VUG Detail</name>
+  <macros>
+  </macros>
+  <width>760</width>
+  <height>520</height>
+  <background_color>
+    <color red="235" green="239" blue="244">
+    </color>
+  </background_color>
+  <widget type="rectangle" version="2.0.0">
+    <name>TitleBg</name>
+    <width>760</width>
+    <height>46</height>
+    <line_width>0</line_width>
+    <background_color>
+      <color red="0" green="80" blue="160">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <text>$(P) — VUG readback</text>
+    <x>14</x>
+    <y>7</y>
+    <width>450</width>
+    <height>30</height>
+    <font>
+      <font family="arial" style="BOLD" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <vertical_alignment>1</vertical_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>UnitNote</name>
+    <text>Pressure unit:</text>
+    <x>470</x>
+    <y>12</y>
+    <width>95</width>
+    <height>22</height>
+    <font>
+      <font family="arial" style="ITALIC" size="10.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="220" green="235" blue="255">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>UnitReadback</name>
+    <pv_name>$(P):UNIT_RB</pv_name>
+    <x>565</x>
+    <y>12</y>
+    <width>175</width>
+    <height>22</height>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>PressureBg</name>
+    <x>15</x>
+    <y>60</y>
+    <width>730</width>
+    <height>248</height>
+    <line_width>1</line_width>
+    <background_color>
+      <color red="250" green="252" blue="255">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>PressureTitle</name>
+    <text>Gauge pressures</text>
+    <x>30</x>
+    <y>70</y>
+    <width>250</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="BOLD" size="13.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>GaugeStateHeader</name><text>State</text><x>650</x><y>70</y><width>80</width><height>26</height>
+    <font><font family="arial" style="BOLD" size="11.0"/></font><horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Gauge1</name>
+    <text>Active ion gauge</text>
+    <x>35</x>
+    <y>108</y>
+    <width>190</width>
+    <height>28</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>ActivePressure</name>
+    <pv_name>$(P):IG:PRES_RB</pv_name>
+    <x>245</x>
+    <y>107</y>
+    <width>220</width>
+    <height>30</height>
+    <font>
+      <font family="arial" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>4</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>ActiveState</name><pv_name>$(P):IG:STATE_RB</pv_name><x>640</x><y>107</y><width>90</width><height>30</height>
+    <off_label>Invalid</off_label><off_color><color red="255" green="0" blue="0"/></off_color>
+    <on_label>Valid</on_label><on_color><color red="0" green="220" blue="0"/></on_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Gauge2</name>
+    <text>Ion gauge 1</text>
+    <x>35</x>
+    <y>153</y>
+    <width>190</width>
+    <height>28</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>IG1Pressure</name>
+    <pv_name>$(P):IG1:PRES_RB</pv_name>
+    <x>245</x>
+    <y>152</y>
+    <width>220</width>
+    <height>30</height>
+    <font>
+      <font family="arial" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>4</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0"><name>IG1State</name><pv_name>$(P):IG1:STATE_RB</pv_name><x>640</x><y>152</y><width>90</width><height>30</height><off_label>Invalid</off_label><off_color><color red="255" green="0" blue="0"/></off_color><on_label>Valid</on_label><on_color><color red="0" green="220" blue="0"/></on_color></widget>
+  <widget type="label" version="2.0.0">
+    <name>Gauge3</name>
+    <text>Ion gauge 2</text>
+    <x>35</x>
+    <y>193</y>
+    <width>190</width>
+    <height>28</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>IG2Pressure</name>
+    <pv_name>$(P):IG2:PRES_RB</pv_name>
+    <x>245</x>
+    <y>192</y>
+    <width>220</width>
+    <height>30</height>
+    <font>
+      <font family="arial" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>4</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0"><name>IG2State</name><pv_name>$(P):IG2:STATE_RB</pv_name><x>640</x><y>192</y><width>90</width><height>30</height><off_label>Invalid</off_label><off_color><color red="255" green="0" blue="0"/></off_color><on_label>Valid</on_label><on_color><color red="0" green="220" blue="0"/></on_color></widget>
+  <widget type="label" version="2.0.0">
+    <name>Gauge4</name>
+    <text>Cold cathode gauge 1</text>
+    <x>35</x>
+    <y>233</y>
+    <width>190</width>
+    <height>28</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>CG1Pressure</name>
+    <pv_name>$(P):CG1:PRES_RB</pv_name>
+    <x>245</x>
+    <y>232</y>
+    <width>220</width>
+    <height>30</height>
+    <font>
+      <font family="arial" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>4</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0"><name>CG1State</name><pv_name>$(P):CG1:STATE_RB</pv_name><x>640</x><y>232</y><width>90</width><height>30</height><off_label>Invalid</off_label><off_color><color red="255" green="0" blue="0"/></off_color><on_label>Valid</on_label><on_color><color red="0" green="220" blue="0"/></on_color></widget>
+  <widget type="label" version="2.0.0">
+    <name>Gauge5</name>
+    <text>Cold cathode gauge 2</text>
+    <x>35</x>
+    <y>273</y>
+    <width>190</width>
+    <height>28</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>CG2Pressure</name>
+    <pv_name>$(P):CG2:PRES_RB</pv_name>
+    <x>245</x>
+    <y>272</y>
+    <width>220</width>
+    <height>30</height>
+    <font>
+      <font family="arial" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>4</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="led" version="2.0.0"><name>CG2State</name><pv_name>$(P):CG2:STATE_RB</pv_name><x>640</x><y>272</y><width>90</width><height>30</height><off_label>Invalid</off_label><off_color><color red="255" green="0" blue="0"/></off_color><on_label>Valid</on_label><on_color><color red="0" green="220" blue="0"/></on_color></widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>StatusBg</name>
+    <x>15</x>
+    <y>322</y>
+    <width>730</width>
+    <height>180</height>
+    <line_width>1</line_width>
+    <background_color>
+      <color red="250" green="252" blue="255">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>StatusTitle</name>
+    <text>Read-only status</text>
+    <x>30</x>
+    <y>332</y>
+    <width>250</width>
+    <height>25</height>
+    <font>
+      <font family="arial" style="BOLD" size="13.0">
+      </font>
+    </font>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>DegasLabel</name>
+    <text>Degas</text>
+    <x>35</x>
+    <y>372</y>
+    <width>150</width>
+    <height>25</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>DegasStatus</name>
+    <pv_name>$(P):Degas:Status</pv_name>
+    <x>190</x>
+    <y>370</y>
+    <height>28</height>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Relay1Label</name>
+    <text>Relay 1</text>
+    <x>35</x>
+    <y>415</y>
+    <width>70</width>
+    <height>24</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Relay1</name>
+    <pv_name>$(P):Relay1:Status</pv_name>
+    <x>108</x>
+    <y>413</y>
+    <width>76</width>
+    <height>28</height>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Relay2Label</name>
+    <text>Relay 2</text>
+    <x>205</x>
+    <y>415</y>
+    <width>70</width>
+    <height>24</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Relay2</name>
+    <pv_name>$(P):Relay2:Status</pv_name>
+    <x>278</x>
+    <y>413</y>
+    <width>76</width>
+    <height>28</height>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Relay3Label</name>
+    <text>Relay 3</text>
+    <x>375</x>
+    <y>415</y>
+    <width>70</width>
+    <height>24</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Relay3</name>
+    <pv_name>$(P):Relay3:Status</pv_name>
+    <x>448</x>
+    <y>413</y>
+    <width>76</width>
+    <height>28</height>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Relay4Label</name>
+    <text>Relay 4</text>
+    <x>545</x>
+    <y>415</y>
+    <width>70</width>
+    <height>24</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Relay4</name>
+    <pv_name>$(P):Relay4:Status</pv_name>
+    <x>618</x>
+    <y>413</y>
+    <width>76</width>
+    <height>28</height>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Relay5Label</name>
+    <text>Relay 5</text>
+    <x>35</x>
+    <y>457</y>
+    <width>70</width>
+    <height>24</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Relay5</name>
+    <pv_name>$(P):Relay5:Status</pv_name>
+    <x>108</x>
+    <y>455</y>
+    <width>76</width>
+    <height>28</height>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Relay6Label</name>
+    <text>Relay 6</text>
+    <x>205</x>
+    <y>457</y>
+    <width>70</width>
+    <height>24</height>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Relay6</name>
+    <pv_name>$(P):Relay6:Status</pv_name>
+    <x>278</x>
+    <y>455</y>
+    <width>76</width>
+    <height>28</height>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+</display>

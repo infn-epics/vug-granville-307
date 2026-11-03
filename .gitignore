@@ -1,0 +1,17 @@
+O.*
+bin/
+lib/
+dbd/
+/db/
+/iocBoot/*/envPaths
+*.dbd
+*.db
+*.o
+*.d
+*.so
+*.a
+*.dll
+*.exe
+*.pyc
+__pycache__/
+.DS_Store
