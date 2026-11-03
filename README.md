@@ -35,7 +35,7 @@ For the DEVIL611 VUG set, `iocBoot/iocgranville307/st-vug-oldcontrol.cmd` connec
 
 ## iBec deployment
 
-The Granville 307 support module is in `ibek-support-infn/granville307`, and the IOC template is `ibek-templates/templates/vac/granville307.yaml.j2` (`template: granville307`). `epik8s-btf/deploy/values-vac.yaml` configures the shared Moxa connection at `192.168.192.40:4008` and lists each gauge by name, sensor channel, and RS-485 address. RS-485 is the protocol default. The tested VUGTR001 uses address `04`; the remaining addresses follow the legacy DEVIL611 `EXTRA` values. The startup unit defaults to Bar (`unit_default: 1`), and operators can switch each gauge's `UNIT_RB` between Torr and Bar at runtime.
+The Granville 307 support module is in `ibek-support-infn/granville307`, and the IOC template is `ibek-templates/templates/vac/granville/granville307.yaml.j2` (`template: granville307`). `epik8s-btf/deploy/values-vac.yaml` lists each gauge by name, sensor channel, and decimal RS-485 address. The template converts that address to the controller's two-digit hexadecimal wire format. RS-485 is the protocol default. The tested VUGTR001 uses decimal address `4` (`04` on the wire); the remaining addresses follow the legacy `EXTRA` values. The startup unit defaults to Bar (`unit_default: 1`), and operators can switch each gauge's `UNIT_RB` between Torr and Bar at runtime.
 
 ```sh
 cd iocBoot/iocgranville307
